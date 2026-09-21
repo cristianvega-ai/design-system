@@ -20,14 +20,14 @@ Geist carries titles and buttons at weight 600 only, so the sheet ships one Geis
 
 ## cristianvega.ai files
 
-These four files and the IBM Plex license come from `cristianvega.ai/src/assets/fonts/`.
+These four files and the IBM Plex license come from `personal/cristianvega.ai/src/assets/fonts/`.
 
 ```bash
-cp ~/Projects/cristianvega.ai/src/assets/fonts/ibm-plex-sans-latin-400.woff2 fonts/
-cp ~/Projects/cristianvega.ai/src/assets/fonts/ibm-plex-sans-latin-400-italic.woff2 fonts/
-cp ~/Projects/cristianvega.ai/src/assets/fonts/ibm-plex-mono-latin-400.woff2 fonts/
-cp ~/Projects/cristianvega.ai/src/assets/fonts/ibm-plex-mono-latin-500.woff2 fonts/
-cp ~/Projects/cristianvega.ai/src/assets/fonts/OFL-ibm-plex.txt fonts/
+cp ~/Projects/personal/cristianvega.ai/src/assets/fonts/ibm-plex-sans-latin-400.woff2 fonts/
+cp ~/Projects/personal/cristianvega.ai/src/assets/fonts/ibm-plex-sans-latin-400-italic.woff2 fonts/
+cp ~/Projects/personal/cristianvega.ai/src/assets/fonts/ibm-plex-mono-latin-400.woff2 fonts/
+cp ~/Projects/personal/cristianvega.ai/src/assets/fonts/ibm-plex-mono-latin-500.woff2 fonts/
+cp ~/Projects/personal/cristianvega.ai/src/assets/fonts/OFL-ibm-plex.txt fonts/
 ```
 
 ## Google Fonts files
