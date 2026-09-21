@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design System Completion</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --paper: #F1F3F6; --surface: #FFFFFF; --surface-2: #F7F8FA; --panel: #E9ECF1;
+    --ink: #14181F; --ink-2: #1A2029; --mast-text: #EAEDF2; --mast-muted: #B9C1CE; --mast-meta: #98A1B0; --mast-line: rgba(255,255,255,.1);
+    --crimson: #D42A3C; --ember: #F2792B; --grad: linear-gradient(102deg, #D42A3C 0%, #F2792B 100%);
+    --bg: var(--paper); --srf: var(--surface); --srf-2: var(--surface-2); --well: var(--panel);
+    --fg: #14181F; --muted: #586173; --meta: #5F697B; --line: #DEE2E9; --line-strong: #C6CDD8; --hairline: #E8EBF1;
+    --teal: #0A7A64; --teal-bg: #E7F3F0; --teal-bd: rgba(12,139,114,.3);
+    --amber: #8F6218; --amber-bg: #F6EFE1; --amber-bd: rgba(192,131,41,.35);
+    --red: #B3261E; --red-bg: rgba(179,38,30,.07); --red-bd: rgba(179,38,30,.3);
+    --shadow-1: 0 1px 2px rgba(20,24,31,.04), 0 12px 32px -18px rgba(20,24,31,.16);
+    --font-display: "Space Grotesk", system-ui, -apple-system, sans-serif;
+    --font-body: "IBM Plex Sans", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
+    --r-sm: 6px; --r-md: 8px; --r-lg: 12px; --r-xl: 16px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #10141B; --srf: #1A2029; --srf-2: #151A22; --well: #0B0F15;
+      --fg: #EAEDF2; --muted: #B9C1CE; --meta: #98A1B0; --line: rgba(255,255,255,.13); --line-strong: rgba(255,255,255,.22); --hairline: rgba(255,255,255,.08);
+      --teal: #9CC8B4; --teal-bg: rgba(111,191,154,.08); --teal-bd: rgba(111,191,154,.4);
+      --amber: #F2CDA0; --amber-bg: rgba(192,131,41,.12); --amber-bd: rgba(192,131,41,.55);
+      --red: #E08585; --red-bg: rgba(224,133,133,.08); --red-bd: rgba(224,133,133,.45);
+      --shadow-1: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px -18px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #10141B; --srf: #1A2029; --srf-2: #151A22; --well: #0B0F15;
+    --fg: #EAEDF2; --muted: #B9C1CE; --meta: #98A1B0; --line: rgba(255,255,255,.13); --line-strong: rgba(255,255,255,.22); --hairline: rgba(255,255,255,.08);
+    --teal: #9CC8B4; --teal-bg: rgba(111,191,154,.08); --teal-bd: rgba(111,191,154,.4);
+    --amber: #F2CDA0; --amber-bg: rgba(192,131,41,.12); --amber-bd: rgba(192,131,41,.55);
+    --red: #E08585; --red-bg: rgba(224,133,133,.08); --red-bd: rgba(224,133,133,.45);
+    --shadow-1: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px -18px rgba(0,0,0,.6);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  * { margin: 0; }
+  body { font-family: var(--font-body); font-size: 16px; line-height: 1.6; color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; }
+  h1 { font-size: clamp(30px, 4vw, 44px); line-height: 1.1; color: var(--mast-text); max-width: 16ch; }
+  h2 { font-size: 24px; line-height: 1.25; }
+  h3 { font-size: 18px; line-height: 1.25; letter-spacing: -0.015em; }
+  p { max-width: 64ch; }
+  code { font-family: var(--font-mono); font-size: .9em; padding: 0 var(--s1); border-radius: 4px; background: var(--srf-2); border: 1px solid var(--hairline); }
+  a { color: var(--crimson); }
+  :focus-visible { outline: 2px solid var(--crimson); outline-offset: 2px; }
+
+  .mast { background: var(--ink); color: var(--mast-text); padding-block: var(--s7) var(--s6); }
+  .wrap { max-width: 1040px; margin-inline: auto; padding-inline: var(--s5); }
+  .eyebrow { display: inline-flex; align-items: center; gap: var(--s2); font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+  .eyebrow::before { content: ""; width: 24px; height: 3px; border-radius: 2px; background: var(--grad); flex: none; }
+  .mast .eyebrow { color: var(--mast-meta); }
+  .mast h1 { margin-top: var(--s4); }
+  .lede { margin-top: var(--s5); font-size: 17px; color: var(--mast-muted); max-width: 60ch; }
+  .lede b { color: var(--mast-text); font-weight: 500; }
+  .facts { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); margin-top: var(--s5); font-family: var(--font-mono); font-size: 11px; letter-spacing: .04em; color: var(--mast-meta); }
+  .facts b { color: var(--mast-muted); font-weight: 500; }
+
+  .sec { padding-block: var(--s7); border-top: 1px solid var(--line); }
+  .sec:first-of-type { border-top: 0; }
+  .sec > .wrap > h2 { margin-top: var(--s3); }
+  .sec > .wrap > h2 + p { margin-top: var(--s3); color: var(--muted); }
+  .grid { display: grid; gap: var(--s4); margin-top: var(--s5); }
+  .grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile { background: var(--srf); border: 1px solid var(--hairline); border-radius: var(--r-lg); padding: var(--s4); box-shadow: var(--shadow-1); display: flex; flex-direction: column; gap: var(--s2); }
+  .tile h3 { font-size: 16px; letter-spacing: -0.01em; }
+  .tile p { font-size: 14px; line-height: 1.5; color: var(--muted); }
+  .chip { align-self: flex-start; display: inline-flex; align-items: center; gap: var(--s1); font-family: var(--font-mono); font-size: 10px; letter-spacing: .04em; line-height: 1.4; padding: 2px var(--s2); border-radius: 999px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+  .chip--done { color: var(--teal); border-color: var(--teal-bd); background: var(--teal-bg); }
+  .chip--fail { color: var(--red); border-color: var(--red-bd); background: var(--red-bg); }
+  .chip--wait { color: var(--amber); border-color: var(--amber-bd); background: var(--amber-bg); }
+
+  figure { margin-top: var(--s5); background: var(--srf); border: 1px solid var(--hairline); border-radius: var(--r-lg); padding: var(--s4); overflow-x: auto; }
+  figure svg { display: block; width: 100%; max-width: 100%; height: auto; min-width: 640px; font-family: var(--font-mono); font-size: 12px; }
+  figcaption { margin-top: var(--s3); font-family: var(--font-mono); font-size: 11px; line-height: 1.6; letter-spacing: .04em; color: var(--meta); }
+  figcaption b { color: var(--muted); font-weight: 600; }
+  .node { fill: var(--srf-2); stroke: currentColor; stroke-width: 1; }
+  .node--src { stroke: var(--crimson); stroke-width: 2; }
+  .region { fill: none; stroke: currentColor; stroke-width: 1; stroke-dasharray: 4 3; }
+  .band { fill: none; stroke: currentColor; stroke-width: 1; stroke-dasharray: 6 4; opacity: .7; }
+  .edge { fill: none; stroke: currentColor; stroke-width: 1.25; }
+  .edge--ref { stroke-dasharray: 5 4; }
+  .t { fill: currentColor; }
+  .t--k { font-weight: 600; }
+  .t--m { fill: var(--meta); font-size: 11px; }
+  .t--src { fill: var(--crimson); font-weight: 600; }
+
+  .changes { list-style: none; padding: 0; margin-top: var(--s5); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s4); counter-reset: change; }
+  .changes li { position: relative; background: var(--srf); border: 1px solid var(--hairline); border-radius: var(--r-lg); padding: var(--s4) var(--s4) var(--s4) var(--s7); box-shadow: var(--shadow-1); }
+  .changes li::before { counter-increment: change; content: counter(change); position: absolute; left: var(--s4); top: var(--s4); width: 24px; height: 24px; border-radius: 50%; background: var(--ink); color: var(--mast-text); font-family: var(--font-mono); font-size: 11px; font-weight: 600; display: grid; place-items: center; }
+  .changes b { display: block; font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: -0.015em; line-height: 1.25; }
+  .changes ul { margin-top: var(--s2); padding-left: var(--s4); font-size: 13px; line-height: 1.5; color: var(--muted); }
+  .changes .ok { margin-top: var(--s3); padding-top: var(--s3); border-top: 1px solid var(--hairline); font-size: 13px; line-height: 1.5; }
+  .changes .ok::before { content: "Accepted when"; display: block; font-family: var(--font-mono); font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); margin-bottom: var(--s1); }
+
+  .table-wrap { margin-top: var(--s5); width: 100%; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--srf); }
+  table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; line-height: 1.5; min-width: 560px; }
+  th { text-align: left; padding: var(--s2) var(--s3); background: var(--srf-2); border-bottom: 1px solid var(--hairline); font-family: var(--font-mono); font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--meta); white-space: nowrap; }
+  td { padding: var(--s2) var(--s3); border-bottom: 1px solid var(--hairline); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  td code { white-space: nowrap; }
+  td.m { color: var(--muted); }
+
+  .contrast { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s4); margin-top: var(--s5); }
+  .swatch { border-radius: var(--r-lg); padding: var(--s4); border: 1px solid var(--line); display: flex; flex-direction: column; gap: var(--s3); }
+  .swatch--paper { background: #F1F3F6; color: #14181F; }
+  .swatch--white { background: #FFFFFF; color: #14181F; }
+  .swatch--ink { background: #14181F; color: #EAEDF2; }
+  .swatch .k { font-family: var(--font-mono); font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #5F697B; }
+  .swatch--ink .k, .swatch--ink small { color: #98A1B0; }
+  .field { display: flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 8px; background: #FFFFFF; color: #14181F; font-size: 13px; }
+  .swatch--ink .field { background: #0B0F15; color: #EAEDF2; }
+  .swatch--paper .field--today { border: 1px solid #DEE2E9; }
+  .swatch--white .field--today { border: 1px solid #E8EBF1; }
+  .swatch--ink .field--today { border: 1px solid rgba(255,255,255,.1); }
+  .swatch--paper .field--target, .swatch--white .field--target { border: 1px solid #7D8695; }
+  .swatch--ink .field--target { border: 1px solid rgba(255,255,255,.35); }
+  .swatch small { font-family: var(--font-mono); font-size: 10px; color: #5F697B; }
+
+  .stack { margin-top: var(--s5); display: grid; gap: var(--s1); max-width: 420px; }
+  .stack div { display: flex; align-items: center; justify-content: space-between; padding: var(--s2) var(--s3); border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--srf); font-family: var(--font-mono); font-size: 12px; box-shadow: var(--shadow-1); }
+  .stack div span:last-child { color: var(--meta); }
+  .stack div:nth-child(2) { margin-left: var(--s3); } .stack div:nth-child(3) { margin-left: calc(2 * var(--s3)); } .stack div:nth-child(4) { margin-left: calc(3 * var(--s3)); } .stack div:nth-child(5) { margin-left: calc(4 * var(--s3)); }
+  .stack .top { background: var(--ink); color: var(--mast-text); border-color: var(--ink); margin-left: 0; margin-bottom: var(--s2); }
+  .stack .top span:last-child { color: var(--mast-meta); }
+
+  .list { margin-top: var(--s5); padding: 0; list-style: none; display: grid; gap: var(--s2); max-width: 64ch; }
+  .list li { position: relative; padding-left: var(--s5); font-size: 15px; line-height: 1.5; }
+  .list li::before { content: ""; position: absolute; left: 4px; top: 9px; width: 7px; height: 7px; transform: rotate(45deg); background: var(--grad); }
+  .list--x li::before { background: none; width: auto; height: auto; transform: none; top: 0; left: 0; content: "✕"; font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--red); line-height: 1.5; }
+  .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s6); }
+  .foot { background: var(--ink); color: var(--mast-meta); font-family: var(--font-mono); font-size: 11px; line-height: 1.6; padding-block: var(--s4); border-top: 1px solid var(--mast-line); }
+  .foot b { color: var(--mast-muted); font-weight: 500; }
+
+  @media (max-width: 900px) { .grid--4, .grid--3, .changes, .contrast { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) { .grid--4, .grid--3, .grid--2, .changes, .contrast, .two { grid-template-columns: 1fr; } .wrap { padding-inline: var(--s4); } .sec { padding-block: var(--s6); } .mast { padding-block: var(--s6) var(--s5); } }
+
+  .flow { list-style: none; padding: 0; margin-top: var(--s5); display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1.35fr); gap: var(--s3); align-items: start; }
+  .flow__step { background: var(--srf); border: 1px solid var(--hairline); border-radius: var(--r-lg); padding: var(--s4); box-shadow: var(--shadow-1); display: flex; flex-direction: column; gap: var(--s2); min-width: 0; }
+  .flow__step > b { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: -0.015em; line-height: 1.25; }
+  .flow__step p { font-size: 13px; line-height: 1.5; color: var(--muted); }
+  .flow__also { padding-top: var(--s2); border-top: 1px solid var(--hairline); font-size: 12px; }
+  .flow__n { width: 24px; height: 24px; border-radius: 50%; background: var(--ink); color: var(--mast-text); font-family: var(--font-mono); font-size: 11px; font-weight: 600; display: inline-grid; place-items: center; flex: none; }
+  .flow__arrow { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 64px; gap: var(--s1); color: var(--meta); width: 84px; }
+  .flow__arrow i::before { content: "\2192"; font-style: normal; font-size: 24px; line-height: 1; color: var(--fg); }
+  .flow__arrow span { font-family: var(--font-mono); font-size: 10px; letter-spacing: .04em; text-align: center; line-height: 1.4; }
+  .regions { list-style: none; padding: 0; display: grid; gap: var(--s1); }
+  .regions li { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s1) var(--s2); border: 1px dashed var(--line-strong); border-radius: 4px; padding: var(--s1) var(--s2); font-size: 12px; line-height: 1.4; }
+  .regions li > code { white-space: nowrap; }
+  .regions li > span { color: var(--meta); font-family: var(--font-mono); font-size: 10px; }
+  .checks { margin-top: var(--s4); border: 1px dashed var(--line-strong); border-radius: var(--r-lg); padding: var(--s4); }
+  .checks__head { display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; }
+  .checks__head b { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: -0.015em; }
+  .checks__cmd { font-family: var(--font-mono); font-size: 11px; color: var(--meta); margin-left: auto; }
+  .checks__list { list-style: none; padding: 0; margin-top: var(--s3); display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s2); }
+  .checks__list li { background: var(--srf); border: 1px solid var(--hairline); border-radius: var(--r-md); padding: var(--s3); display: flex; flex-direction: column; gap: var(--s1); font-size: 12px; line-height: 1.45; color: var(--muted); min-width: 0; }
+  .checks__list b { font-family: var(--font-mono); font-size: 12px; color: var(--fg); }
+  .result { margin-top: var(--s4); display: flex; gap: var(--s3); align-items: flex-start; padding: var(--s4); background: var(--teal-bg); border: 1px solid var(--teal-bd); border-radius: var(--r-lg); }
+  .result b { display: block; font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: -0.01em; line-height: 1.25; }
+  .result p { margin-top: var(--s1); font-size: 13px; line-height: 1.5; color: var(--muted); }
+  @media (max-width: 900px) { .flow { grid-template-columns: 1fr; } .flow__arrow { width: auto; flex-direction: row; padding-top: 0; gap: var(--s2); } .flow__arrow i::before { content: "\2193"; } .checks__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) { .checks__list { grid-template-columns: 1fr; } .checks__cmd { margin-left: 0; } }
+
+  .chain { display: grid; grid-template-columns: 1fr; gap: var(--s2); margin-top: var(--s5); }
+  .chain__step { background: var(--srf); border: 1px solid var(--hairline); border-radius: var(--r-lg); padding: var(--s3) var(--s4); box-shadow: var(--shadow-1); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s2) var(--s5); align-items: start; min-width: 0; }
+  .chain__k { grid-column: 1 / -1; font-family: var(--font-mono); font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--meta); }
+  .chain__code { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; color: var(--fg); background: var(--srf-2); border: 1px solid var(--hairline); border-radius: var(--r-sm); padding: var(--s2) var(--s3); white-space: pre; overflow-x: auto; margin: 0; }
+  .chain__step p { font-size: 13px; line-height: 1.5; color: var(--muted); align-self: center; }
+  .chain__arrow { display: flex; align-items: center; gap: var(--s2); padding-left: var(--s4); color: var(--meta); }
+  .chain__arrow i::before { content: "\2193"; font-style: normal; font-size: 20px; line-height: 1; color: var(--fg); }
+  .chain__arrow span { font-family: var(--font-mono); font-size: 10px; letter-spacing: .04em; line-height: 1.4; }
+  .demo-btn { display: inline-flex; align-items: center; justify-self: start; align-self: center; height: 32px; padding: 0 16px; border-radius: 8px; background: var(--crimson); color: #FFFFFF; font-family: var(--font-display); font-weight: 600; font-size: 13px; }
+  .note { margin-top: var(--s4); font-size: 14px; line-height: 1.5; color: var(--muted); max-width: 72ch; }
+  .tile__io { font-family: var(--font-mono); font-size: 11px; line-height: 1.5; color: var(--meta); margin-top: auto; padding-top: var(--s2); border-top: 1px solid var(--hairline); }
+  .chip--ink { background: var(--ink); color: var(--mast-text); border-color: var(--ink); }
+  .chip--gen { border-style: dashed; border-color: var(--line-strong); }
+  .places { list-style: none; padding: 0; display: grid; gap: var(--s1); }
+  .places li { display: grid; gap: 2px; border: 1px dashed var(--line-strong); border-radius: 4px; padding: var(--s1) var(--s2); }
+  .places b { font-size: 13px; line-height: 1.4; }
+  .places span { font-size: 12px; line-height: 1.4; color: var(--muted); }
+  .places code { justify-self: start; font-size: 10px; color: var(--meta); margin-top: 2px; }
+  @media (max-width: 600px) { .chain__step { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <p class="eyebrow">Design · revision 3 · 2026-09-15</p>
+    <h1>Design System Completion</h1>
+    <p class="lede">One token file becomes the source of every value. A build writes the sheet from it. Every simple control becomes its native element. Every promise in the text gets a rule or a recorded deferral. <b>One command proves it on every change, and it arrives first.</b></p>
+    <p class="facts"><span><b>Sheet</b> · cristian-vega-design-system.html · v1.1 → v1.2.0</span><span><b>Home</b> · ~/Projects/design-system, a new git repository</span><span><b>Apps and sites</b> · out of scope</span><span><b>Spec</b> · docs/superpowers/specs/2026-09-15-design-system-completion-design.md</span></p>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Decisions</p>
+    <h2>Settled before the work starts.</h2>
+    <div class="grid grid--3">
+      <div class="tile"><span class="chip chip--done">decided</span><h3>Home: its own repository</h3><p>The sheet and every source move into ~/Projects/design-system before change 1. The handwritten sheet is under version control from the first commit. The maintainer is the owner of the cristianvega-ai repositories.</p></div>
+      <div class="tile"><span class="chip chip--done">decided</span><h3>Checks come first, on one toolchain</h3><p>The build and its five checks are change 1, all on Node 24. Style Dictionary 5, the standard token build, writes the tokens; one short script writes the sheet. Both current scripts exit 0 even when they report a problem, so they are replaced by checks that exit 1 and never write a file.</p></div>
+      <div class="tile"><span class="chip chip--fail">removed</span><h3>Dark mode</h3><p>The concept leaves this work entirely. The sheet keeps its statement that version 1 has no app-wide dark mode. The backlog holds it with the trigger: an app must follow system appearance.</p></div>
+      <div class="tile"><span class="chip chip--fail">removed</span><h3>Migration table</h3><p>None. The old names are gone from the sheet. The console aliases stay until a product adopts the system.</p></div>
+      <div class="tile"><span class="chip chip--done">decided</span><h3>Text rules, scoped</h3><p>The sheet's descriptive text and the spec follow Simplified Technical English with spelled-out acronyms. Code comments use plain language. No script counts words.</p></div>
+      <div class="tile"><span class="chip chip--wait">deferred</span><h3>Swift output, symbol names, widget behavior</h3><p>Each waits in the backlog for a trigger: a native app adopts the system, or a product needs a working composite widget.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Artifacts</p>
+    <h2>What a token is, and what each file does.</h2>
+    <p>A token is one named value: a color, a size, a spacing step, a radius, a shadow, a duration. The name is what a rule on the sheet uses. The value lives in one place, the token file. Change it there, run the build, and every rule that uses the name follows.</p>
+    <div class="chain">
+      <div class="chain__step"><span class="chain__k">1 · in tokens.json · you write this</span><pre class="chain__code">"fs-ui": {
+  "$type": "dimension",
+  "$value": "13px",
+  "$description": "the console ground"
+}</pre><p><code>fs-ui</code> is the name. 13 pixels is the value. The description becomes a comment.</p></div>
+      <div class="chain__arrow" aria-hidden="true"><i></i><span>the build writes</span></div>
+      <div class="chain__step"><span class="chain__k">2 · in the sheet's :root · generated</span><pre class="chain__code">--fs-ui: 13px; /* the console ground */</pre><p>The same name and value, as a custom property that any rule in the stylesheet can read.</p></div>
+      <div class="chain__arrow" aria-hidden="true"><i></i><span>a rule reads</span></div>
+      <div class="chain__step"><span class="chain__k">3 · in a component rule · handwritten</span><pre class="chain__code">.btn--mini {
+  font-size: var(--fs-ui);
+}</pre><p>The rule names the token. It never repeats the number.</p></div>
+      <div class="chain__arrow" aria-hidden="true"><i></i><span>on screen</span></div>
+      <div class="chain__step chain__step--render"><span class="chain__k">4 · the result</span><span class="demo-btn">Approve</span><p>A mini button at 13 pixels. The same on every ground, and in every product that reads the same names.</p></div>
+    </div>
+    <p class="note">A value can point at another token by its path. <code>"signal": { "$value": "{brand.crimson}" }</code> becomes <code>--signal: var(--crimson)</code>. One color, several names, one place to change it.</p>
+    <div class="grid grid--3">
+      <div class="tile"><span class="chip">you write it</span><h3>tokens.json</h3><p>The list of every named value: colors, type sizes, spacing steps, radii, shadows, durations, focus rings, layers. 158 tokens today, plus the version and the date.</p><p class="tile__io">Read by the build and by the contrast check.</p></div>
+      <div class="tile"><span class="chip chip--ink">script</span><h3>build/</h3><p>config.mjs runs Style Dictionary, the standard token build, which writes dist/tokens.css. inject.mjs then writes the four places in the sheet from dist/, icons/, and the live stylesheet. Stops on a bad marker or a reference to a missing token.</p><p class="tile__io">npm run build, after every change to tokens.json or icons/.</p></div>
+      <div class="tile"><span class="chip">you write it</span><h3>the sheet</h3><p>cristian-vega-design-system.html, the document people read: the specimens, the captions, the rules. Handwritten, except the four places the build fills.</p><p class="tile__io">Read by the inventory, markup, and drift checks.</p></div>
+      <div class="tile"><span class="chip chip--gen">generated</span><h3>dist/tokens.css</h3><p>The token list alone, as a plain stylesheet file, for a product that cannot read the sheet. Identical to the list inside the sheet.</p><p class="tile__io">Written by the build. Compared by the drift check. No product uses it yet.</p></div>
+      <div class="tile"><span class="chip">you write it once</span><h3>icons/</h3><p>Sixteen small vector files, one per icon name, taken out of the sheet once. The build copies them back in as one set of drawings that every icon on the page reuses.</p><p class="tile__io">Read by the build.</p></div>
+      <div class="tile"><span class="chip">downloaded once</span><h3>fonts/</h3><p>The font files the sheet uses, in the folder next to it. The sheet loads them itself, so it renders with no network.</p><p class="tile__io">Not touched by the build or the checks.</p></div>
+      <div class="tile"><span class="chip chip--ink">scripts</span><h3>checks/</h3><p>Five Node scripts, their tests, and exceptions.json, which lists every allowed raw value with a reason. One command, npm run check, runs them all.</p><p class="tile__io">They read everything and write nothing. Exit 1 stops a bad change.</p></div>
+      <div class="tile"><span class="chip">you write it</span><h3>docs, CHANGELOG, README</h3><p>This design and its page, the review, and the plan. What changed in each version. How to build, check, and change the sheet.</p><p class="tile__io">Updated in the same change as the sheet.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Mechanism</p>
+    <h2>How a value travels, and what stops a bad one.</h2>
+    <p>Five steps. A value is typed once. The build copies it into the sheet. The checks read the result and stop a bad one. Nothing in step 4 writes a file.</p>
+    <ol class="flow">
+      <li class="flow__step">
+        <span class="flow__n">1</span>
+        <b>Type the value once</b>
+        <p>In <code>tokens.json</code>: the 158 product tokens, the version, and the date. No other file holds a token value.</p>
+        <p class="flow__also">The build also reads <code>icons/</code>, sixteen vector files.</p>
+      </li>
+      <li class="flow__arrow" aria-hidden="true"><i></i><span>reads</span></li>
+      <li class="flow__step">
+        <span class="flow__n">2</span>
+        <b>Build</b>
+        <p><code>npm run build</code>: Style Dictionary writes dist/tokens.css, then inject.mjs writes the sheet. It stops on a missing, duplicate, or reversed marker, or a reference to a missing token. Otherwise it writes step 3 and prints each file.</p>
+      </li>
+      <li class="flow__arrow" aria-hidden="true"><i></i><span>writes between the markers</span></li>
+      <li class="flow__step">
+        <span class="flow__n">3</span>
+        <b>Five places get written</b>
+        <p>Four are inside the sheet. Each sits between two marker comments, and the build replaces only what is between them.</p>
+        <ul class="places">
+          <li><b>The token list</b><span>inside the sheet's stylesheet, so every rule can read the names</span><code>/* build:tokens */</code></li>
+          <li><b>The printed token list</b><span>in the Adoption section, for people to read and copy</span><code>&lt;!-- build:token-block --&gt;</code></li>
+          <li><b>The printed ground contract</b><span>in the Adoption section, copied from the live rules</span><code>&lt;!-- build:ground-contract --&gt;</code></li>
+          <li><b>The icon drawings</b><span>at the top of the page, reused by every icon on it</span><code>&lt;!-- build:icons --&gt;</code></li>
+          <li><b>dist/tokens.css</b><span>a separate file: the token list alone, for a product</span><code>a file, not a marker</code></li>
+        </ul>
+        <p class="flow__also">Everything else on the sheet is handwritten. The fonts load on their own.</p>
+      </li>
+    </ol>
+    <div class="checks">
+      <div class="checks__head"><span class="flow__n">4</span><b>Check the result</b><span class="checks__cmd">checks/run.sh · reads only · exits 1 on any failure</span></div>
+      <ol class="checks__list">
+        <li><b>4.1 Tests</b><span>node --test for the inject, drift, and contrast scripts. Runs first.</span></li>
+        <li><b>4.2 Inventory</b><span>Reads the sheet's rules. Fails on a raw pixel or hex with no entry in exceptions.json.</span></li>
+        <li><b>4.3 Contrast</b><span>Reads tokens.json and resolves references. Fails on a pair under 4.5:1 for text or 3:1 for a boundary.</span></li>
+        <li><b>4.4 Markup</b><span>Reads the sheet. Fails on an unbalanced tag.</span></li>
+        <li><b>4.5 Drift</b><span>Builds into a temporary folder. Fails when a region, dist/tokens.css, or the version differs from that build.</span></li>
+      </ol>
+    </div>
+    <div class="result">
+      <span class="flow__n">5</span>
+      <div><b>Exit 0: the change is good. Exit 1: fix it before review.</b><p>The tests prove that the checks catch a fault. An edited region, a pair under its limit, and a raw pixel with no exception must each fail.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Order</p>
+    <h2>Three changes. Each one is reviewable on its own.</h2>
+    <p>The checks arrive with the build, so every later change runs against them. Each change updates the sheet, the token file, the checks, and this page together.</p>
+    <ol class="changes">
+      <li><b>Source and checks</b><ul><li>The repository, with the sheet under version control.</li><li>The 158 product tokens extracted from the sheet, not redesigned.</li><li>Style Dictionary and the inject script, valid markers, four regions, dist/tokens.css.</li><li>Five checks, their unit tests, and exceptions.json with a reason per entry.</li></ul><div class="ok">Two builds in a row are identical. Every existing value is preserved. The three intentional faults fail their checks. run.sh exits 0.</div></li>
+      <li><b>Current controls</b><ul><li>--g-line-control on three grounds, from the ground contract.</li><li>Native simple controls; real select; labels, hints, and errors linked.</li><li>Forced states only inside marked examples. No is-* alias for a native state; model-driven classes stay.</li><li>Composite widgets as static pictures with a keyboard table.</li></ul><div class="ok">browser.mjs shows every enabled simple control in the tab order with the ring, and the expected boundary color per state and ground. You approved the before and after. run.sh exits 0.</div></li>
+      <li><b>Assets and documentation</b><ul><li>Local fonts with separate fallback faces that carry the metrics.</li><li>One inline icon sprite from icons/.</li><li>Layer tokens, the overlay table, the naming rule.</li><li>The completeness audit, the text rules applied, the change log and README for 1.2.0.</li></ul><div class="ok">The sheet renders with no network. Generated regions match the build. The audit lists no open item. run.sh exits 0.</div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Controls</p>
+    <h2>Simple controls become native. Composite widgets stay pictures.</h2>
+    <p>A native element brings its own state, so the sheet keeps no is-* alias for a native state. Model-driven classes such as is-selected stay. A state the sheet cannot enter on its own, such as focus, shows inside a marked example: <code>.input:focus-within, .example[data-state="focus"] .input</code>. Tabs, menus, popover lists, and the palette need keyboard behavior the sheet does not implement. The sheet wraps them as images with a keyboard table beside them.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Specimen today</th><th>Native element</th><th>State</th></tr></thead>
+      <tbody>
+        <tr><td><code>span.btn</code> · <code>span.gbtn</code> · <code>span.icon-btn</code> · <code>span.menu-btn</code></td><td><code>button</code> with the same class</td><td class="m">:hover · :active · :disabled · :focus-visible</td></tr>
+        <tr><td><code>div.input</code></td><td><code>div.field</code> with <code>label</code>, <code>input</code>, hint or error linked by aria-describedby</td><td class="m">:focus-within · :has(:disabled) · :has([aria-invalid="true"])</td></tr>
+        <tr><td><code>div.textarea</code></td><td><code>textarea</code></td><td class="m">:focus-visible · :disabled · [aria-invalid="true"]</td></tr>
+        <tr><td><code>div.select</code></td><td><code>select</code>, a real one</td><td class="m">:focus-visible · :disabled</td></tr>
+        <tr><td><code>span.switch</code></td><td><code>label</code> around <code>input[type=checkbox][role=switch]</code></td><td class="m">:has(:checked) · :has(:disabled)</td></tr>
+        <tr><td><code>span.check</code> · <code>span.radio</code></td><td><code>label</code> around a checkbox or radio input</td><td class="m">:has(:checked) · :has(:disabled)</td></tr>
+        <tr><td><code>div.dialog</code></td><td><code>dialog[open]</code>, static; a product opens it with showModal()</td><td class="m">none on the sheet</td></tr>
+        <tr><td>tabs · menu · popover list · palette</td><td><code>figure role="img"</code>, no widget role</td><td class="m">keyboard behavior documented, not implemented</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="two">
+      <div>
+        <p class="eyebrow">Control boundaries</p>
+        <h2>The contract gets one more line.</h2>
+        <p>Inputs read <code>--g-line</code> today, weaker than the spec first assumed, on every ground. A new contract name, <code>--g-line-control</code>, maps to the lightest passing gray on paper and surface and to the 35% white line on ink. Six boundaries read it, including the select on hover. Focus, error, and checked keep their own colors.</p>
+        <div class="contrast">
+          <div class="swatch swatch--paper"><span class="k">Paper</span><div class="field field--today">Today · 1.2:1</div><div class="field field--target">Target · 3:1 or more</div><small>target border is an example; the check records the final value</small></div>
+          <div class="swatch swatch--white"><span class="k">Surface</span><div class="field field--today">Today · 1.1:1</div><div class="field field--target">Target · 3:1 or more</div><small>same token as paper</small></div>
+          <div class="swatch swatch--ink"><span class="k">Ink</span><div class="field field--today">Today · 1.3:1</div><div class="field field--target">Target · 35% white · 3.2:1</div><small>an existing token, --mast-line-strong</small></div>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow">Layers</p>
+        <h2>Five values, and one thing they cannot do.</h2>
+        <p>The tokens replace the prose order. A modal dialog sits in the browser's top layer, above any z-index on the page. A tip or a toast that must show over a modal renders inside the dialog element.</p>
+        <div class="stack">
+          <div class="top"><span>top layer · modal dialog</span><span>no z-index reaches it</span></div>
+          <div><span>--z-tip</span><span>50</span></div>
+          <div><span>--z-dialog · palette</span><span>40</span></div>
+          <div><span>--z-toast</span><span>30</span></div>
+          <div><span>--z-popover · menu</span><span>20</span></div>
+          <div><span>--z-drawer</span><span>10</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="two">
+      <div>
+        <p class="eyebrow">Fonts</p>
+        <h2>Local files, and a separate fallback face.</h2>
+        <ul class="list">
+          <li>The weights the sheet uses, as latin woff2 files in fonts/, next to the sheet, so the relative path resolves.</li>
+          <li>Five files come from cristianvega.ai; the rest from the Google Fonts endpoint, one latin file per weight.</li>
+          <li>Each face has font-display: swap. The metric overrides sit on a separate fallback face declared with src: local(), never on the downloaded face.</li>
+          <li>fontTools measures the overrides once in a throwaway environment; the values and the command go into fonts/README.md.</li>
+          <li>The sheet must render with no network.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow">Icons and audit</p>
+        <h2>One sprite. Every promise resolved.</h2>
+        <ul class="list">
+          <li>Sixteen files in icons/. The build writes them into the sheet as one inline sprite, so the sheet still opens from disk.</li>
+          <li>The Icons caption drops the promise of a system symbol mapping. The backlog holds it with its trigger.</li>
+          <li>The audit lists every component, size, or behavior the text names with no rule. Each gets a rule and a specimen, a deleted promise, or a backlog entry with a trigger. Deleting an unneeded promise is a valid outcome.</li>
+          <li>Known today: the drawer, the 46-pixel reader toolbar, the tip position, the popover offset, the 840-pixel narrow container, the 48 and 44-pixel document padding, the symbol mapping.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="two">
+      <div>
+        <p class="eyebrow">Text rules · sheet and spec only</p>
+        <h2>Short, active, one word per thing.</h2>
+        <ul class="list">
+          <li>A sentence has one topic and 20 words or fewer.</li>
+          <li>Active voice. Say who does what.</li>
+          <li>One instruction in each sentence. Start with the verb.</li>
+          <li>The same word for the same thing.</li>
+          <li>"Must" for a requirement. "Can" for a possibility. Never "should".</li>
+          <li>No acronym in descriptive text. A class name, a token, or a file extension is not an acronym.</li>
+          <li>A short usage instruction comes before the reference detail.</li>
+          <li>Specimen text does not change. Code comments use plain language. No script counts words.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow">Backlog · each entry has a trigger</p>
+        <h2>Nothing here is built before its trigger.</h2>
+        <ul class="list list--x">
+          <li>Dark mode for the app frame · an app must follow system appearance.</li>
+          <li>DesignTokens.swift, one more platform in the build configuration · a native app adopts the system.</li>
+          <li>SF Symbols names for the sixteen icons · a native app adopts the system.</li>
+          <li>Working examples of composite widgets · a product needs one.</li>
+          <li>A published package and product-side checks · a product adopts the system.</li>
+          <li>Continuous integration for run.sh · the repository gets a remote.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Done</p>
+    <h2>The work is done when all of these are true.</h2>
+    <ul class="list">
+      <li>The repository exists, holds the sheet and the sources, and has the change log for 1.2.0.</li>
+      <li>The token file is the source. The build writes the four regions and tokens.css. drift.mjs passes.</li>
+      <li>Every simple control specimen is a native element with native states, and browser.mjs confirms the tab order and the ring.</li>
+      <li>--g-line-control measures 3:1 or more on all three grounds, and you approved the look.</li>
+      <li>The sheet renders with local fonts and one inline icon sprite, with no network.</li>
+      <li>The layer tokens exist and the overlay table has no empty cell.</li>
+      <li>The naming rule is on the sheet.</li>
+      <li>The completeness audit lists no open item, and the backlog has a trigger per entry.</li>
+      <li>All descriptive text follows the text rules.</li>
+      <li>checks/run.sh exits 0.</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap"><b>Cristian Vega</b> · design system completion · revision 3 of 2026-09-15 · the Markdown spec is the authority; this page is updated with it</div>
+</footer>
+
+</body>
+</html>

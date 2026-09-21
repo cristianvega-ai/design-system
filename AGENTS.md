@@ -1,0 +1,100 @@
+# Cristian Vega design system: agent instructions
+
+This repository holds the design system: one sheet, one token file, and the build that joins them.
+Optimize for agreement between the sheet, `tokens.json`, and `dist/`.
+
+## Precedence
+
+The owner's request in the conversation comes first. This file comes second.
+A nested `AGENTS.md` adds rules for its own directory.
+If two rules conflict, follow the more specific rule and name the conflict in your summary.
+
+## Language
+
+Write everything about the work in ASD-STE100 Simplified Technical English.
+This covers replies, commit messages, comments, test names, and documents, including this file.
+
+- Keep one topic and 20 words or fewer in each sentence.
+- Use the active voice.
+- Give one instruction per sentence, and start it with the verb.
+- Use "must" for a requirement and "can" for a possibility. Do not use "should".
+- Use the same word for the same thing.
+
+The text in the sheet and in the products document follows the same rules. `README.md` holds the full list.
+Run `node checks/text-report.mjs` to find each sentence that breaks them.
+
+## Commands
+
+```bash
+npm install        # once
+npm run build      # writes dist/ and the generated regions of both documents
+checks/run.sh      # the required gate: every check, including the browser check
+npm run browser    # rendered states only
+```
+
+The build needs Node 24 or newer. Run `npx playwright install chromium` once per machine.
+
+## Where to look
+
+- Use `README.md` when you change a token, add an icon, record an exception, or release a version.
+- Use `CHANGELOG.md` to find why a rule exists.
+- Use `docs/superpowers/specs/` when a change touches a recorded decision.
+
+## Working rules
+
+- Read each file before you change it, and follow the pattern already in it.
+- Make the smallest change that satisfies the request. Report other problems as follow-ups.
+- Edit `tokens.json` to change a token. The build overwrites the generated regions, so an edit inside a region is lost.
+- This repository is public. Keep each key, private path, and account detail out of tracked files.
+
+### Proceed without asking
+
+Run the build and every check. Edit the token file, the products document, and the sheet outside its generated regions.
+These actions are local and reversible.
+
+### Ask first
+
+- adding a dependency, because the tool versions are pinned;
+- changing or deleting a check, or adding an entry to `checks/exceptions.json`;
+- renaming a token, because products read the names;
+- running `node checks/text-judge.mjs`, because it sends text to an external service;
+- merging into `main`, releasing a version, or pushing a tag;
+- any destructive Git command.
+
+## Git
+
+- Stage files by explicit path. A stage-all also adds private files that `.gitignore` does not cover.
+- Confirm what you staged before you write the message.
+- The subject must describe what the commit contains.
+- Write the subject as one plain sentence that states the change. This repository uses no prefixes.
+- Commit the sheet, the products document, and `dist/` together with the token file.
+- `docs/superpowers/` is tracked here. The text judge reads its glossary from a specification in that folder.
+
+### Branches
+
+- Create each branch from a current `main`.
+- Name the branch `<type>/<description>`, for example `fix/live-gate-retry`.
+- Write the description as two to five lowercase words joined by hyphens. State the outcome.
+- Keep one outcome in one branch, and delete the branch after it merges.
+- A branch that a tool creates keeps the tool's name, for example `dependabot/...`.
+
+| Type | Use it for |
+| --- | --- |
+| `feature` | new functionality |
+| `fix` | a defect correction |
+| `content` | published words that do not change behavior |
+| `documentation` | words about the repository |
+| `test` | test-only changes |
+| `performance` | measured performance work |
+| `refactor` | restructuring that preserves behavior |
+| `chore` | repository or tooling maintenance |
+
+Use the complete word. Do not use a short form such as `feat`, `docs`, or `perf`.
+
+## Done
+
+A change is complete when:
+
+- `checks/run.sh` passes;
+- `git status` shows no accidental files and no uncommitted build output;
+- the README and the change log describe each changed command, token, or rule.
