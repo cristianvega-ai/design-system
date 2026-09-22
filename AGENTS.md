@@ -39,6 +39,7 @@ The build needs Node 24 or newer. Run `npx playwright install chromium` once per
 - Use `README.md` when you change a token, add an icon, record an exception, or release a version.
 - Use `CHANGELOG.md` to find why a rule exists.
 - Use `technical-standard/documentation.md` to write a document, and `docs/` to find a recorded decision.
+- Use `docs/glossary.md` for the approved words. The text judge reads it.
 
 ## Working rules
 
@@ -63,33 +64,11 @@ These actions are local and reversible.
 
 ## Git
 
+- Follow `technical-standard/git.md` for branches, commits, merges, and releases.
 - Stage files by explicit path. A stage-all also adds private files that `.gitignore` does not cover.
 - Confirm what you staged before you write the message.
-- The subject must describe what the commit contains.
 - Write the subject as one plain sentence that states the change. Use no prefix and no trailer.
 - Commit the sheet, the products document, and `dist/` together with the token file.
-- `docs/glossary.md` holds the approved words. The text judge reads it.
-
-### Branches
-
-- Create each branch from a current `main`.
-- Name the branch `<type>/<description>`, for example `fix/live-gate-retry`.
-- Write the description as two to five lowercase words joined by hyphens. State the outcome.
-- Keep one outcome in one branch, and delete the branch after it merges.
-- A branch that a tool creates keeps the tool's name, for example `dependabot/...`.
-
-| Type | Use it for |
-| --- | --- |
-| `feature` | new functionality |
-| `fix` | a defect correction |
-| `content` | published words that do not change behavior |
-| `documentation` | words about the repository |
-| `test` | test-only changes |
-| `performance` | measured performance work |
-| `refactor` | restructuring that preserves behavior |
-| `chore` | repository or tooling maintenance |
-
-Use the complete word. Do not use a short form such as `feat`, `docs`, or `perf`.
 
 ## Done
 

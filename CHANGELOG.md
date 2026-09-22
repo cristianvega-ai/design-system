@@ -1,5 +1,11 @@
 # Change log
 
+## Unreleased
+
+### The technical standard
+
+- `technical-standard/git.md` holds the git standard: branches, commits, merges, and releases. The branch rules move there from `AGENTS.md`, which points to the file.
+
 ## 1.0.0 · 2026-09-22
 
 This is the first public release.
