@@ -1,0 +1,17 @@
+{
+  "name": "cristian-vega-design-system",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "build": "node build/config.mjs && node build/inject.mjs",
+    "test": "node --test 'checks/**/*.test.mjs'",
+    "check": "npm test && node checks/inventory.mjs && node checks/contrast.mjs && node checks/markup.mjs && node checks/drift.mjs && node checks/browser.mjs",
+    "browser": "node checks/browser.mjs"
+  },
+  "devDependencies": {
+    "style-dictionary": "5.5.3",
+    "playwright": "1.63.0"
+  }
+}

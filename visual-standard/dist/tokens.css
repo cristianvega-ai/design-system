@@ -1,0 +1,167 @@
+:root {
+  --font-display: "Geist", "Geist Fallback", system-ui, -apple-system, sans-serif;
+  --font-body: "IBM Plex Sans", "IBM Plex Sans Fallback", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --font-mono: "IBM Plex Mono", "IBM Plex Mono Fallback", ui-monospace, "SF Mono", Menlo, monospace;
+  --fs-micro: 9px; /* mono caps inside a dense component */
+  --fs-caption: 10px; /* chips, kbd, timestamps, hints in mono */
+  --fs-meta: 11px; /* toolbar buttons, placeholders, code, captions on this sheet */
+  --fs-footnote: 12px; /* tags, row summaries, table cells, eyebrow */
+  --fs-ui: 13px; /* the console ground: controls, menus, messages, row titles */
+  --fs-body-s: 14px; /* card copy, list bullets, notes */
+  --fs-view-title: 14px; /* Geist 600 · an app view header */
+  --fs-body: 16px; /* reading: the document and this sheet */
+  --fs-headline: 16px; /* Geist 600 · dialog title, tight card title */
+  --fs-lede: 17px; /* one quiet line under a title */
+  --fs-subhead: 18px; /* Geist 600 · card title, document h3, pull quote */
+  --fs-heading: 24px; /* Geist 600 · document h2, the stat number */
+  --fs-title: 30px; /* Geist 600 · document title, a page's one display line */
+  --fs-display: clamp(26px, 3vw, 34px); /* section h2 */
+  --fs-display-xl: clamp(38px, 4.9vw, 60px); /* marketing h1 */
+  --lh-display: 1.1;
+  --lh-heading: 1.25;
+  --lh-ui: 1.4;
+  --lh-body-s: 1.5;
+  --lh-body: 1.6;
+  --track-display-xl: -0.028em;
+  --track-display: -0.02em;
+  --track-subhead: -0.015em;
+  --track-headline: -0.01em;
+  --track-mono: .04em; /* lowercase mono */
+  --track-caps: .12em; /* uppercase mono labels */
+  --track-caps-wide: .16em; /* the eyebrow and the marker */
+  --space-0: 2px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 88px;
+  --control-s: 28px;
+  --control-m: 32px;
+  --control-l: 40px;
+  --header-height: 64px;
+  --titlebar-height: 44px;
+  --container: 1180px;
+  --stage-max: 1440px; /* the widest drawn window in the products document */
+  --stage-scale-floor: 0.42; /* the smallest scale the stage applies to a drawn window */
+  --icon: 14px;
+  --icon-s: 11px;
+  --icon-l: 16px;
+  --radius-2xs: 2px; /* bars, meters, rails, the eyebrow dash, a legend key */
+  --radius-xs: 4px; /* kind tag, check box, inline code, the focus corner */
+  --radius-sm: 6px; /* tag, kbd, tip, toolbar button, sidebar item, tab, menu item */
+  --radius-md: 8px; /* button, input, row, code, table, callout, toast */
+  --radius-lg: 12px; /* tight card, stat, approval, menu, popover, list card */
+  --radius-xl: 16px; /* card, dialog, palette, window */
+  --radius-pill: 999px;
+  --shadow-1: 0 1px 2px rgba(20,24,31,.04), 0 12px 32px -18px rgba(20,24,31,.16); /* raised: a resting card */
+  --shadow-2: 0 6px 24px -12px rgba(20,24,31,.22), 0 2px 6px -3px rgba(20,24,31,.10); /* floating: menu, popover, toast */
+  --shadow-3: 0 2px 4px rgba(20,24,31,.05), 0 26px 52px -22px rgba(20,24,31,.26); /* overlay: a lifted card, dialog, palette, window */
+  --shadow-1-on-ink: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px -18px rgba(0,0,0,.6);
+  --shadow-2-on-ink: 0 6px 24px -12px rgba(0,0,0,.6), 0 2px 6px -3px rgba(0,0,0,.4);
+  --shadow-3-on-ink: 0 2px 4px rgba(0,0,0,.4), 0 26px 52px -22px rgba(0,0,0,.7);
+  --scrim: rgba(20,24,31,.35);
+  --dur-press: 120ms;
+  --dur-hover: 150ms;
+  --dur-lift: 300ms;
+  --dur-rise: 550ms;
+  --dur-spin: 700ms;
+  --dur-sweep: 1400ms;
+  --dur-pulse: 2400ms;
+  --stagger: 80ms;
+  --ease-lift: cubic-bezier(.2,.7,.2,1);
+  --focus-offset: 2px;
+  --ring-w: 3px;
+  --ring-surface: rgba(3,105,161,.12);
+  --ring-ink: rgba(56,189,248,.18);
+  --dim: .45;
+  --z-drawer: 10;
+  --z-popover: 20; /* popover and menu */
+  --z-toast: 30;
+  --z-dialog: 40; /* dialog and palette when not modal */
+  --z-tip: 50;
+  --ink: #14181F;
+  --ink-deep: #0F131A;
+  --ink-well: #0B0F15;
+  --ink-2: #1A2029;
+  --surface: #FFFFFF;
+  --surface-2: #F7F8FA;
+  --surface-well: #F1F3F6; /* the recess on surface: wells and the light edge */
+  --raise: rgba(20,24,31,.05);
+  --fg: #14181F;
+  --muted: #586173;
+  --meta: #5F697B;
+  --line: #DEE2E9;
+  --line-strong: #C6CDD8;
+  --line-control: #858D9D; /* control boundary on surface and on the well, 3:1 or more; chosen by checks/contrast.mjs */
+  --hairline: #E8EBF1;
+  --mark2-surface: rgba(20,24,31,.4);
+  --mast-text: #EAEDF2;
+  --mast-muted: #B9C1CE;
+  --mast-meta: #98A1B0;
+  --mast-line: rgba(255,255,255,.1);
+  --mast-line-strong: rgba(255,255,255,.35);
+  --mast-hairline: rgba(255,255,255,.07);
+  --mast-surface-2: rgba(255,255,255,.04);
+  --mast-raise: rgba(255,255,255,.06);
+  --mast-scroll: rgba(255,255,255,.2);
+  --mark2-ink: rgba(255,255,255,.42);
+  --grid-line: rgba(255,255,255,.028);
+  --grid-line-surface: rgba(20,24,31,.055);
+  --azure: #0369A1;
+  --azure-dark: #075985;
+  --sky: #38BDF8;
+  --mist: #BAE6FD;
+  --mist-2: #7DD3FC;
+  --signal-fg: #FFFFFF;
+  --sky-bd: rgba(56,189,248,.4);
+  --sky-bg: rgba(56,189,248,.08);
+  --grad: linear-gradient(102deg, #0369A1 0%, #38BDF8 100%);
+  --grad-soft: linear-gradient(102deg, rgba(3,105,161,.09) 0%, rgba(56,189,248,.09) 100%);
+  --teal: #0A7A64;
+  --teal-bg: #E7F3F0;
+  --teal-bd: rgba(12,139,114,.3);
+  --teal-dot: #0C8B72;
+  --teal-on-ink: #9CC8B4;
+  --teal-bg-on-ink: rgba(111,191,154,.08);
+  --teal-bd-on-ink: rgba(111,191,154,.4);
+  --teal-dot-on-ink: #6FBF9A;
+  --amber: #8F6218;
+  --amber-bg: #F6EFE1;
+  --amber-bd: rgba(192,131,41,.35);
+  --amber-dot: #C08329;
+  --amber-on-ink: #F2CDA0;
+  --amber-bg-on-ink: rgba(192,131,41,.12);
+  --amber-bd-on-ink: rgba(192,131,41,.55);
+  --red: #B3261E;
+  --red-bg: rgba(179,38,30,.07);
+  --red-bd: rgba(179,38,30,.3);
+  --red-on-ink: #E08585;
+  --red-bg-on-ink: rgba(224,133,133,.08);
+  --red-bd-on-ink: rgba(224,133,133,.45);
+  --tag-slate: #1D5FB0;
+  --tag-slate-bg: #E9F1FB;
+  --tag-slate-bd: #C6DBF3;
+  --tag-slate-on-ink: #9CC0F0;
+  --tag-slate-bg-on-ink: rgba(29,95,176,.18);
+  --tag-slate-bd-on-ink: rgba(120,170,235,.35);
+  --tag-muted: #41485A;
+  --tag-muted-bg: #EEF0F4;
+  --tag-muted-bd: #D6DBE3;
+  --tag-muted-on-ink: #B9C1CE;
+  --tag-muted-bg-on-ink: rgba(255,255,255,.05);
+  --tag-muted-bd-on-ink: rgba(255,255,255,.1);
+  --code-bg: #14181F;
+  --code-text: #C9D1DC;
+  --code-accent: #F2CDBB;
+  --focus-surface: 2px solid var(--azure);
+  --focus-ink: 3px solid var(--sky);
+  --signal: var(--azure);
+  --signal-text: var(--azure);
+  --signal-text-on-ink: var(--mist-2);
+  --live-text: var(--azure-dark);
+  --live-text-on-ink: var(--mist);
+}
